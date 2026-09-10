@@ -34,13 +34,29 @@ const SALAS = [
 // codigoClasificacion en vez de id porque el id real se resuelve luego de insertar
 // Películas reales en cartelera en Colombia (septiembre 2026).
 const PELICULAS = [
-  { titulo_original: "The Dog Stars", titulo_local: "La Guerra de los Últimos", sinopsis: "Tras la pandemia que devastó al mundo, Hig sobrevive aislado en un hangar de aviones en Colorado junto a su perro y a Bangley, un hosco experto en supervivencia. Cuando capta una misteriosa transmisión de radio mientras vuela su vieja avioneta, decide arriesgarlo todo para descubrir de dónde viene la señal, en busca de la esperanza y la humanidad en las que aún cree.", duracion_minutos: 100, director: "Ridley Scott", estudio_productor: "20th Century Studios", fecha_estreno_nacional: "2026-08-27", codigoClasificacion: "B", genero: "Acción / Ciencia ficción", destacada: 1, poster_url: "/posters/guerra-de-los-ultimos.jpg" },
-  { titulo_original: "The Odyssey", titulo_local: "La Odisea", sinopsis: "El legendario rey Odiseo emprende su largo y peligroso viaje de regreso a Ítaca tras la Guerra de Troya. A lo largo de su travesía debe enfrentarse a dioses caprichosos, monstruos mitológicos y pruebas que ponen a prueba su astucia y su humanidad hasta el límite, mientras Penélope lo espera desde hace veinte años.", duracion_minutos: 172, director: "Christopher Nolan", estudio_productor: "Universal Pictures", fecha_estreno_nacional: "2026-07-16", codigoClasificacion: "B", genero: "Épica / Aventura", destacada: 0, poster_url: "/posters/la-odisea.jpg" },
-  { titulo_original: "Coyote vs. ACME", titulo_local: "Coyote vs. ACME", sinopsis: "Después de que todos los productos de la Corporación ACME fallaran en su eterna persecución del Correcaminos, Wile E. Coyote contrata al abogado Kevin Avery para demandar a la empresa. La creciente amistad entre los dos impulsará su determinación por ganar el caso frente a Buddy Crane, el intimidante jefe del antiguo bufete de Kevin, que ahora representa a ACME.", duracion_minutos: 103, director: "Dave Green", estudio_productor: "Warner Bros. Pictures", fecha_estreno_nacional: "2026-08-27", codigoClasificacion: "PG", genero: "Animación / Comedia", destacada: 0, poster_url: "/posters/coyote-acme.jpg" },
-  { titulo_original: "Insidious: Out of the Further", titulo_local: "La Noche del Demonio: Están Entre Nosotros", sinopsis: "Gemma, una joven madre que cría sola a su hija en la casa de su infancia, descubre que puede viajar a El Más Allá y traer de regreso al mundo real lo que vive allí. Cuando las entidades demoníacas descubren su poder, comienzan a usarlo como un portal que pone en riesgo a su familia y a nuestro mundo.", duracion_minutos: 106, director: "Jacob Chase", estudio_productor: "Blumhouse / Sony Pictures", fecha_estreno_nacional: "2026-08-20", codigoClasificacion: "C", genero: "Terror", destacada: 0, poster_url: "/posters/noche-del-demonio.jpg" },
-  { titulo_original: "Spider-Man: Brand New Day", titulo_local: "Spider-Man: Un Nuevo Día", sinopsis: "Cuatro años después de los eventos de Sin regreso a casa, Peter Parker es un adulto que vive completamente solo, borrado de las vidas y recuerdos de sus seres queridos. Combatiendo el crimen en una Nueva York que ya no conoce su nombre, la presión desencadena una sorprendente evolución física que amenaza su existencia, mientras un extraño patrón de crímenes da lugar a una de las amenazas más poderosas a las que se ha enfrentado.", duracion_minutos: 145, director: "Destin Daniel Cretton", estudio_productor: "Sony Pictures / Marvel Studios", fecha_estreno_nacional: "2026-07-30", codigoClasificacion: "B", genero: "Acción / Superhéroes", destacada: 0, poster_url: "/posters/spider-man-nuevo-dia.jpg" },
-  { titulo_original: "Ice Cream Man", titulo_local: "El Heladero: Dulce Sabor a Muerte", sinopsis: "La idílica tranquilidad de un pueblo suburbano se convierte en una auténtica pesadilla cuando un enigmático vendedor de helados reparte sus irresistibles creaciones entre los niños. Al probar sus dulces, los pequeños se convierten en maníacos homicidas que desatan una ola de violencia sobre todos sus habitantes.", duracion_minutos: 86, director: "Eli Roth", estudio_productor: "The Horror Section", fecha_estreno_nacional: "2026-09-03", codigoClasificacion: "C", genero: "Terror", destacada: 0, poster_url: "/posters/el-heladero.jpg" },
-  { titulo_original: "Tonari no Totoro", titulo_local: "Mi Vecino Totoro", sinopsis: "Dos hermanas se mudan al campo con su padre para estar cerca de su madre hospitalizada y descubren que los árboles que rodean su nueva casa están habitados por los Totoros, espíritus mágicos del bosque. Cuando la pequeña Mei se pierde, su hermana mayor pedirá ayuda a los espíritus para encontrarla. (Reestreno en cines)", duracion_minutos: 86, director: "Hayao Miyazaki", estudio_productor: "Studio Ghibli", fecha_estreno_nacional: "2026-09-01", codigoClasificacion: "TP", genero: "Animación / Familiar", destacada: 0, poster_url: "/posters/mi-vecino-totoro.jpg" },
+  { titulo_original: "The Dog Stars", titulo_local: "La Guerra de los Últimos", sinopsis: "Tras la pandemia que devastó al mundo, Hig sobrevive aislado en un hangar de aviones en Colorado junto a su perro y a Bangley, un hosco experto en supervivencia. Cuando capta una misteriosa transmisión de radio mientras vuela su vieja avioneta, decide arriesgarlo todo para descubrir de dónde viene la señal, en busca de la esperanza y la humanidad en las que aún cree.", duracion_minutos: 100, director: "Ridley Scott", estudio_productor: "20th Century Studios", fecha_estreno_nacional: "2026-08-27", codigoClasificacion: "B", genero: "Acción / Ciencia ficción", destacada: 1, poster_url: "/posters/guerra-de-los-ultimos.jpg", backdrop_url: "/backdrops/guerra-ultimos.jpg" },
+  { titulo_original: "The Odyssey", titulo_local: "La Odisea", sinopsis: "El legendario rey Odiseo emprende su largo y peligroso viaje de regreso a Ítaca tras la Guerra de Troya. A lo largo de su travesía debe enfrentarse a dioses caprichosos, monstruos mitológicos y pruebas que ponen a prueba su astucia y su humanidad hasta el límite, mientras Penélope lo espera desde hace veinte años.", duracion_minutos: 172, director: "Christopher Nolan", estudio_productor: "Universal Pictures", fecha_estreno_nacional: "2026-07-16", codigoClasificacion: "B", genero: "Épica / Aventura", destacada: 0, poster_url: "/posters/la-odisea.jpg", backdrop_url: "/backdrops/odisea.jpg" },
+  { titulo_original: "Coyote vs. ACME", titulo_local: "Coyote vs. ACME", sinopsis: "Después de que todos los productos de la Corporación ACME fallaran en su eterna persecución del Correcaminos, Wile E. Coyote contrata al abogado Kevin Avery para demandar a la empresa. La creciente amistad entre los dos impulsará su determinación por ganar el caso frente a Buddy Crane, el intimidante jefe del antiguo bufete de Kevin, que ahora representa a ACME.", duracion_minutos: 103, director: "Dave Green", estudio_productor: "Warner Bros. Pictures", fecha_estreno_nacional: "2026-08-27", codigoClasificacion: "PG", genero: "Animación / Comedia", destacada: 0, poster_url: "/posters/coyote-acme.jpg", backdrop_url: "/backdrops/coyote-acme.jpg" },
+  { titulo_original: "Insidious: Out of the Further", titulo_local: "La Noche del Demonio: Están Entre Nosotros", sinopsis: "Gemma, una joven madre que cría sola a su hija en la casa de su infancia, descubre que puede viajar a El Más Allá y traer de regreso al mundo real lo que vive allí. Cuando las entidades demoníacas descubren su poder, comienzan a usarlo como un portal que pone en riesgo a su familia y a nuestro mundo.", duracion_minutos: 106, director: "Jacob Chase", estudio_productor: "Blumhouse / Sony Pictures", fecha_estreno_nacional: "2026-08-20", codigoClasificacion: "C", genero: "Terror", destacada: 0, poster_url: "/posters/noche-del-demonio.jpg", backdrop_url: "/backdrops/noche-demonio.jpg" },
+  { titulo_original: "Spider-Man: Brand New Day", titulo_local: "Spider-Man: Un Nuevo Día", sinopsis: "Cuatro años después de los eventos de Sin regreso a casa, Peter Parker es un adulto que vive completamente solo, borrado de las vidas y recuerdos de sus seres queridos. Combatiendo el crimen en una Nueva York que ya no conoce su nombre, la presión desencadena una sorprendente evolución física que amenaza su existencia, mientras un extraño patrón de crímenes da lugar a una de las amenazas más poderosas a las que se ha enfrentado.", duracion_minutos: 145, director: "Destin Daniel Cretton", estudio_productor: "Sony Pictures / Marvel Studios", fecha_estreno_nacional: "2026-07-30", codigoClasificacion: "B", genero: "Acción / Superhéroes", destacada: 0, poster_url: "/posters/spider-man-nuevo-dia.jpg", backdrop_url: "/backdrops/spiderman.jpg" },
+  { titulo_original: "Ice Cream Man", titulo_local: "El Heladero: Dulce Sabor a Muerte", sinopsis: "La idílica tranquilidad de un pueblo suburbano se convierte en una auténtica pesadilla cuando un enigmático vendedor de helados reparte sus irresistibles creaciones entre los niños. Al probar sus dulces, los pequeños se convierten en maníacos homicidas que desatan una ola de violencia sobre todos sus habitantes.", duracion_minutos: 86, director: "Eli Roth", estudio_productor: "The Horror Section", fecha_estreno_nacional: "2026-09-03", codigoClasificacion: "C", genero: "Terror", destacada: 0, poster_url: "/posters/el-heladero.jpg", backdrop_url: "/backdrops/heladero.jpg" },
+  { titulo_original: "Tonari no Totoro", titulo_local: "Mi Vecino Totoro", sinopsis: "Dos hermanas se mudan al campo con su padre para estar cerca de su madre hospitalizada y descubren que los árboles que rodean su nueva casa están habitados por los Totoros, espíritus mágicos del bosque. Cuando la pequeña Mei se pierde, su hermana mayor pedirá ayuda a los espíritus para encontrarla. (Reestreno en cines)", duracion_minutos: 86, director: "Hayao Miyazaki", estudio_productor: "Studio Ghibli", fecha_estreno_nacional: "2026-09-01", codigoClasificacion: "TP", genero: "Animación / Familiar", destacada: 0, poster_url: "/posters/mi-vecino-totoro.jpg", backdrop_url: "/backdrops/totoro.jpg" },
+];
+
+// Carta de dulcería del cine (crispetas, bebidas, combos...).
+const PRODUCTOS = [
+  { nombre: "Crispetas Pequeñas", descripcion: "Maíz pira con sal o mantequilla.", categoria: "crispetas", precio: 9000, orden: 1, imagen_url: "/dulceria/crispetas-pequenas.jpg" },
+  { nombre: "Crispetas Medianas", descripcion: "El clásico para compartir de a dos.", categoria: "crispetas", precio: 13000, orden: 2, imagen_url: "/dulceria/crispetas-medianas.jpg" },
+  { nombre: "Crispetas Grandes", descripcion: "Tamaño cine, con refill en sala VIP.", categoria: "crispetas", precio: 17000, orden: 3, imagen_url: "/dulceria/crispetas-grandes.jpg" },
+  { nombre: "Gaseosa Mediana", descripcion: "400 ml, varios sabores.", categoria: "bebidas", precio: 8000, orden: 4, imagen_url: "/dulceria/gaseosa-mediana.jpg" },
+  { nombre: "Gaseosa Grande", descripcion: "700 ml con hielo.", categoria: "bebidas", precio: 11000, orden: 5, imagen_url: "/dulceria/gaseosa-grande.jpg" },
+  { nombre: "Jugo Natural", descripcion: "Mora, mango o maracuyá en agua o leche.", categoria: "bebidas", precio: 9000, orden: 6, imagen_url: "/dulceria/jugo-natural.jpg" },
+  { nombre: "Perro Caliente", descripcion: "Salchicha americana, papas y salsas.", categoria: "comida", precio: 12000, orden: 7, imagen_url: "/dulceria/perro-caliente.jpg" },
+  { nombre: "Nachos con Queso", descripcion: "Totopos con queso cheddar y jalapeños.", categoria: "comida", precio: 14000, orden: 8, imagen_url: "/dulceria/nachos-queso.jpg" },
+  { nombre: "Combo Pareja", descripcion: "Crispetas grandes + 2 gaseosas medianas.", categoria: "combos", precio: 32000, orden: 9, imagen_url: "/dulceria/combo-pareja.jpg" },
+  { nombre: "Combo Familiar", descripcion: "2 crispetas grandes + 4 gaseosas + nachos.", categoria: "combos", precio: 65000, orden: 10, imagen_url: "/dulceria/combo-familiar.jpg" },
+  { nombre: "Chocolatina", descripcion: "Chocolate con maní.", categoria: "dulces", precio: 5000, orden: 11, imagen_url: "/dulceria/chocolatina.jpg" },
+  { nombre: "Gomitas", descripcion: "Bolsa surtida 100 g.", categoria: "dulces", precio: 6000, orden: 12, imagen_url: "/dulceria/gomitas.jpg" },
 ];
 
 // numeroSala en vez de id_sala, tituloLocal en vez de id_pelicula: se
@@ -69,7 +85,7 @@ function hashAsiento(texto) {
 
 async function limpiarTablas() {
   await pool.query("SET FOREIGN_KEY_CHECKS = 0");
-  for (const tabla of ["boletos", "ventas", "clientes", "funciones", "asientos", "peliculas", "salas", "clasificaciones"]) {
+  for (const tabla of ["detalle_venta", "boletos", "ventas", "clientes", "funciones", "asientos", "peliculas", "salas", "clasificaciones", "productos", "usuarios"]) {
     await pool.query(`TRUNCATE TABLE ${tabla}`);
   }
   await pool.query("SET FOREIGN_KEY_CHECKS = 1");
@@ -121,11 +137,12 @@ async function sembrarPeliculas(idsClasificacion) {
     const [resultado] = await pool.query(
       `INSERT INTO peliculas
         (titulo_original, titulo_local, sinopsis, duracion_minutos, director, estudio_productor,
-         fecha_estreno_nacional, id_clasificacion, poster_url, genero, destacada)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         fecha_estreno_nacional, id_clasificacion, poster_url, genero, destacada, backdrop_url)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         p.titulo_original, p.titulo_local, p.sinopsis, p.duracion_minutos, p.director, p.estudio_productor,
         p.fecha_estreno_nacional, idsClasificacion[p.codigoClasificacion], p.poster_url, p.genero, p.destacada,
+        p.backdrop_url || null,
       ]
     );
     idsPorTitulo[p.titulo_local] = resultado.insertId;
@@ -168,6 +185,15 @@ async function sembrarFunciones(idsPelicula, idsSala) {
   }
 }
 
+async function sembrarProductos() {
+  for (const p of PRODUCTOS) {
+    await pool.query(
+      "INSERT INTO productos (nombre, descripcion, categoria, precio, orden, imagen_url) VALUES (?, ?, ?, ?, ?, ?)",
+      [p.nombre, p.descripcion, p.categoria, p.precio, p.orden, p.imagen_url]
+    );
+  }
+}
+
 async function main() {
   console.log("Limpiando tablas...");
   await limpiarTablas();
@@ -183,6 +209,9 @@ async function main() {
 
   console.log("Sembrando funciones (hoy y mañana)...");
   await sembrarFunciones(idsPelicula, idsSala);
+
+  console.log("Sembrando productos de dulcería...");
+  await sembrarProductos();
 
   console.log("Listo ✔");
   await pool.end();

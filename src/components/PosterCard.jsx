@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCatalogo } from "../context/CatalogoContext.jsx";
 import { formatearDuracion } from "../utils/format.js";
+import { etiquetaClasificacion } from "../utils/clasificacion.js";
 import Badge from "./Badge.jsx";
 import styles from "./PosterCard.module.css";
 
@@ -38,7 +39,7 @@ export default function PosterCard({ pelicula }) {
           {new Date(pelicula.fecha_estreno_nacional).getFullYear()} · {pelicula.director} · {formatearDuracion(pelicula.duracion_minutos)}
         </p>
         <div className={styles.metaBadges}>
-          {clasificacion && <Badge>{clasificacion.codigo}</Badge>}
+          {clasificacion && <Badge>{etiquetaClasificacion(clasificacion)}</Badge>}
           {Boolean(pelicula.destacada) && <Badge variant="prestige">Estreno</Badge>}
         </div>
       </div>

@@ -1,0 +1,80 @@
+.contenedor {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-3xl);
+  max-width: 28rem;
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0;
+}
+
+.tab,
+.tabActiva {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.tab {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.tabActiva {
+  border: 1px solid var(--color-gold-border);
+  background: var(--color-gold-tint);
+  color: var(--color-text-primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo input {
+  background: var(--color-surface-high);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9375rem;
+  font-family: inherit;
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+}
+
+.error {
+  color: #e0655a;
+}
+
+.botonPrimario {
+  display: inline-block;
+  text-align: center;
+  background: var(--color-text-primary);
+  color: var(--color-canvas);
+  border: 1px solid var(--color-text-primary);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.75rem;
+  transition: opacity 150ms ease;
+}
+
+.botonPrimario:disabled {
+  opacity: 0.6;
+}

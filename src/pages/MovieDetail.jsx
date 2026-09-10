@@ -3,8 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { useCatalogo } from "../context/CatalogoContext.jsx";
 import { api } from "../api/client.js";
 import { formatearDuracion } from "../utils/format.js";
+import { etiquetaClasificacion } from "../utils/clasificacion.js";
 import Badge from "../components/Badge.jsx";
 import ProgramList from "../components/ProgramList.jsx";
+import TrailerModal from "../components/TrailerModal.jsx";
 import styles from "./MovieDetail.module.css";
 
 export default function MovieDetail() {
@@ -13,6 +15,7 @@ export default function MovieDetail() {
   const { getPeliculaById, getClasificacionById, cargando: cargandoCatalogo } = useCatalogo();
   const [funciones, setFunciones] = useState([]);
   const [cargandoFunciones, setCargandoFunciones] = useState(true);
+  const [verTrailer, setVerTrailer] = useState(false);
 
   const pelicula = getPeliculaById(id);
 
@@ -82,9 +85,20 @@ export default function MovieDetail() {
 
           <div className={styles.badges}>
             {clasificacion && (
-              <Badge variant="prestige">{clasificacion.codigo} · {clasificacion.descripcion_corta}</Badge>
+              <Badge variant="prestige">{etiquetaClasificacion(clasificacion)}</Badge>
             )}
             <Badge>{formatearDuracion(pelicula.duracion_minutos)}</Badge>
+          </div>
+
+          <div className={styles.acciones}>
+            <button
+              type="button"
+              className={`label-md ${styles.botonTrailer}`}
+              onClick={() => setVerTrailer(true)}
+            >
+              <span className="material-symbols-outlined">play_circle</span>
+              Ver tráiler latino
+            </button>
           </div>
 
           <p className={`body-lg text-secondary ${styles.sinopsis}`}>{pelicula.sinopsis}</p>
@@ -114,6 +128,8 @@ export default function MovieDetail() {
           <ProgramList funciones={funciones} />
         )}
       </section>
+
+      {verTrailer && <TrailerModal pelicula={pelicula} onCerrar={() => setVerTrailer(false)} />}
     </div>
   );
 }

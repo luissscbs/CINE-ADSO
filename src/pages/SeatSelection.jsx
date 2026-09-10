@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useCatalogo } from "../context/CatalogoContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
+import { useCarrito } from "../context/CarritoContext.jsx";
 import { api } from "../api/client.js";
 import { calcularPrecioAsiento } from "../utils/seats.js";
 import { formatearFecha, formatearHora, formatearPrecio } from "../utils/format.js";
@@ -15,6 +17,8 @@ const CLIENTE_VACIO = { nombres: "", apellidos: "", email: "" };
 export default function SeatSelection() {
   const { id } = useParams();
   const { getPeliculaById, getSalaById, cargando: cargandoCatalogo } = useCatalogo();
+  const { usuario } = useAuth();
+  const { items: itemsDulceria, vaciar: vaciarCarrito } = useCarrito();
 
   const [funcion, setFuncion] = useState(null);
   const [asientos, setAsientos] = useState([]);
@@ -24,8 +28,18 @@ export default function SeatSelection() {
 
   const [seleccionados, setSeleccionados] = useState([]);
   const [cliente, setCliente] = useState(CLIENTE_VACIO);
-  const [metodoPago, setMetodoPago] = useState("Tarjeta de crédito/débito");
-  const [errores, setErrores] = useState({});
+
+  // Si el usuario ingresó, prellenamos sus datos en la compra.
+  useEffect(() => {
+    if (usuario) {
+      setCliente({
+        nombres: usuario.nombres || "",
+        apellidos: usuario.apellidos || "",
+        email: usuario.email || "",
+      });
+    }
+  }, [usuario]);
+  const [metodoPago, setMetodoPago] = useState("Tarjeta de crédito/débito");  const [errores, setErrores] = useState({});
   const [limiteAlcanzado, setLimiteAlcanzado] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [errorEnvio, setErrorEnvio] = useState(null);
@@ -102,8 +116,13 @@ export default function SeatSelection() {
         cliente,
         metodoPago,
         asientos: seleccionados,
+        dulceria: itemsDulceria.map((i) => ({
+          id_producto: i.producto.id_producto,
+          cantidad: i.cantidad,
+        })),
       });
       setConfirmacion(resultado);
+      vaciarCarrito();
     } catch (err) {
       setErrorEnvio(err.message);
       // alguien más se adelantó a comprar uno de estos asientos: refrescamos
@@ -155,6 +174,12 @@ export default function SeatSelection() {
             <div key={b.id_boleto} className={`body-sm ${styles.reciboFila}`}>
               <span>Asiento {b.fila}{b.numero}</span>
               <span className="text-muted">{b.codigo_qr}</span>
+            </div>
+          ))}
+          {(confirmacion.dulceria || []).map((l) => (
+            <div key={`dulceria-${l.id_producto}`} className={`body-sm ${styles.reciboFila}`}>
+              <span>{l.cantidad} × {l.nombre}</span>
+              <span className="text-muted">{formatearPrecio(l.subtotal)}</span>
             </div>
           ))}
           <div className={`body-md ${styles.reciboTotal}`}>
@@ -209,6 +234,7 @@ export default function SeatSelection() {
           limiteMax={LIMITE_ASIENTOS}
           enviando={enviando}
           errorEnvio={errorEnvio}
+          dulceria={itemsDulceria}
         />
       </div>
     </div>

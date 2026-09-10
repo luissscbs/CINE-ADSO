@@ -7,6 +7,8 @@ import salasRouter from "./routes/salas.js";
 import peliculasRouter from "./routes/peliculas.js";
 import funcionesRouter from "./routes/funciones.js";
 import ventasRouter from "./routes/ventas.js";
+import authRouter from "./routes/auth.js";
+import productosRouter from "./routes/productos.js";
 
 dotenv.config();
 
@@ -22,6 +24,8 @@ app.use("/api/salas", salasRouter);
 app.use("/api/peliculas", peliculasRouter);
 app.use("/api/funciones", funcionesRouter);
 app.use("/api/ventas", ventasRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/productos", productosRouter);
 
 // manejador de errores centralizado
 app.use((err, req, res, next) => {
@@ -31,5 +35,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`Cine ADSO API escuchando en http://localhost:${PORT}`);
+  console.log(`TecnoCine API escuchando en http://localhost:${PORT}`);
 });

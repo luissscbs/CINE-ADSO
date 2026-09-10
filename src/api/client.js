@@ -1,8 +1,20 @@
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
+function obtenerToken() {
+  try {
+    return window.localStorage.getItem("cine-adso-token");
+  } catch {
+    return null;
+  }
+}
+
 async function solicitar(ruta, opciones) {
+  const token = obtenerToken();
   const respuesta = await fetch(`${BASE_URL}${ruta}`, {
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     ...opciones,
   });
 
@@ -31,4 +43,11 @@ export const api = {
   getAsientosOcupados: (idFuncion) => solicitar(`/funciones/${idFuncion}/ocupados`),
   crearVenta: (payload) =>
     solicitar("/ventas", { method: "POST", body: JSON.stringify(payload) }),
+  crearVentaDulceria: (payload) =>
+    solicitar("/ventas/dulceria", { method: "POST", body: JSON.stringify(payload) }),
+  getProductos: () => solicitar("/productos"),
+  registro: (payload) =>
+    solicitar("/auth/registro", { method: "POST", body: JSON.stringify(payload) }),
+  login: (payload) => solicitar("/auth/login", { method: "POST", body: JSON.stringify(payload) }),
+  getPerfil: () => solicitar("/auth/perfil"),
 };

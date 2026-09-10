@@ -76,6 +76,7 @@ CREATE TABLE peliculas (
   fecha_estreno_nacional DATE,
   id_clasificacion       INT(11),
   poster_url             VARCHAR(1000),
+  backdrop_url           VARCHAR(1000),
   genero                 VARCHAR(100),  -- añadido, fuera del diagrama
   destacada              TINYINT(1) NOT NULL DEFAULT 0, -- añadido, fuera del diagrama
   FOREIGN KEY (id_clasificacion) REFERENCES clasificaciones(id_clasificacion)
@@ -107,6 +108,32 @@ CREATE TABLE ventas (
   FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
 );
 
+-- ---- usuarios ------------------------------------------------------------
+-- Auth real del front (registro/login con email + contraseña hasheada).
+CREATE TABLE usuarios (
+  id_usuario      INT(11) AUTO_INCREMENT PRIMARY KEY,
+  nombres         VARCHAR(100) NOT NULL,
+  apellidos       VARCHAR(100) NOT NULL,
+  email           VARCHAR(150) NOT NULL,
+  password_hash   VARCHAR(255) NOT NULL,
+  fecha_registro  DATE NOT NULL DEFAULT (CURRENT_DATE),
+  UNIQUE KEY uq_usuario_email (email)
+);
+
+-- ---- productos -----------------------------------------------------------
+-- Dulcería del cine (crispetas, bebidas, combos...). Se venden junto a los
+-- boletos o solos; las líneas quedan en detalle_venta.
+CREATE TABLE productos (
+  id_producto  INT(11) AUTO_INCREMENT PRIMARY KEY,
+  nombre       VARCHAR(150) NOT NULL,
+  descripcion  VARCHAR(500),
+  categoria    VARCHAR(50) NOT NULL DEFAULT 'dulceria',
+  precio       DECIMAL(10,2) NOT NULL,
+  imagen_url   VARCHAR(1000),
+  disponible   TINYINT(1) NOT NULL DEFAULT 1,
+  orden        INT(11) NOT NULL DEFAULT 0
+);
+
 -- ---- boletos ------------------------------------------------------------
 -- La restricción UNIQUE (id_funcion, id_asiento) es la que impide, a nivel
 -- de base de datos, que un mismo asiento se venda dos veces para la misma
@@ -123,4 +150,16 @@ CREATE TABLE boletos (
   FOREIGN KEY (id_funcion) REFERENCES funciones(id_funcion),
   FOREIGN KEY (id_asiento) REFERENCES asientos(id_asiento),
   UNIQUE KEY uq_asiento_por_funcion (id_funcion, id_asiento)
+);
+
+-- ---- detalle_venta --------------------------------------------------------
+-- Líneas de dulcería dentro de una venta (boletos van en `boletos`).
+CREATE TABLE detalle_venta (
+  id_detalle      INT(11) AUTO_INCREMENT PRIMARY KEY,
+  id_venta        INT(11) NOT NULL,
+  id_producto     INT(11) NOT NULL,
+  cantidad        INT(11) NOT NULL,
+  precio_unitario DECIMAL(10,2) NOT NULL,
+  FOREIGN KEY (id_venta) REFERENCES ventas(id_venta),
+  FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );

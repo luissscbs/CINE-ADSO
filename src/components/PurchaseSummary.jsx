@@ -16,8 +16,14 @@ export default function PurchaseSummary({
   limiteMax,
   enviando = false,
   errorEnvio = null,
+  dulceria = [],
 }) {
-  const subtotal = asientosSeleccionados.reduce((suma, a) => suma + a.precio, 0);
+  const subtotalBoletos = asientosSeleccionados.reduce((suma, a) => suma + a.precio, 0);
+  const subtotalDulceria = dulceria.reduce(
+    (suma, i) => suma + Number(i.producto.precio) * i.cantidad,
+    0
+  );
+  const subtotal = subtotalBoletos + subtotalDulceria;
   const cargo = Math.round(subtotal * cargoServicio);
   const total = subtotal + cargo;
 
@@ -40,6 +46,14 @@ export default function PurchaseSummary({
               </div>
             ))
         )}
+        {dulceria.map((i) => (
+          <div key={`dulceria-${i.producto.id_producto}`} className={`body-sm ${styles.filaResumen}`}>
+            <span>
+              {i.cantidad} × {i.producto.nombre}
+            </span>
+            <span>{formatearPrecio(Number(i.producto.precio) * i.cantidad)}</span>
+          </div>
+        ))}
       </div>
 
       <div className={`body-sm ${styles.totales}`}>
