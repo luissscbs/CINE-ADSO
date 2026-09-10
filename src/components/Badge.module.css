@@ -1,0 +1,20 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3em 0.65em;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.editorial {
+  background: var(--color-surface-low);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.prestige {
+  background: var(--color-gold-tint);
+  border: 1px solid var(--color-gold-border);
+  color: var(--color-gold);
+}

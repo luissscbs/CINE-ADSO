@@ -1,0 +1,142 @@
+/* =========================================================================
+   Mapa de asientos. Cuatro estados visuales distintos y no ambiguos:
+   disponible / preferencial-vip / seleccionado / ocupado / fuera de servicio.
+   Sin sombras — la jerarquía se resuelve con relleno, borde y opacidad,
+   como pide el sistema de diseño.
+   ========================================================================= */
+
+.pantallaWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.pantallaLinea {
+  width: 70%;
+  max-width: 26rem;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent
+  );
+  opacity: 0.6;
+}
+
+.pantallaLabel {
+  color: var(--color-text-muted);
+}
+
+.mapa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.filaEtiqueta {
+  width: 1.2rem;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.asientosFila {
+  flex: 1;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.asiento {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+.asiento[data-mitad="true"] {
+  margin-right: 0.6rem;
+}
+
+.asientoDisponible {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.asientoDisponible:hover:not(:disabled) {
+  border-color: var(--color-border-focus);
+  color: var(--color-text-primary);
+}
+
+.asientoPreferencial {
+  border-color: var(--color-gold-border);
+  background: var(--color-gold-tint);
+  color: var(--color-gold);
+}
+
+.asientoSeleccionado {
+  background: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+  color: var(--color-canvas);
+  font-weight: 500;
+}
+
+.asientoOcupado {
+  background: var(--color-surface-low);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.asientoMantenimiento {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-surface-low),
+    var(--color-surface-low) 3px,
+    var(--color-surface-high) 3px,
+    var(--color-surface-high) 6px
+  );
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.leyendaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+}
+
+.leyendaSwatch {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+}

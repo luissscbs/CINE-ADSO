@@ -1,0 +1,17 @@
+Coloca aquí las imágenes reales de los pósters con estos nombres exactos
+(los mismos que están en poster_url dentro de backend/seed.js):
+
+  guerra-de-los-ultimos.jpg    -> La Guerra de los Últimos
+  la-odisea.jpg                -> La Odisea
+  coyote-acme.jpg              -> Coyote vs. ACME
+  noche-del-demonio.jpg        -> La Noche del Demonio: Están Entre Nosotros
+  spider-man-nuevo-dia.jpg     -> Spider-Man: Un Nuevo Día
+  el-heladero.jpg              -> El Heladero: Dulce Sabor a Muerte
+  mi-vecino-totoro.jpg         -> Mi Vecino Totoro
+
+Como esta carpeta está dentro de /public, Vite las sirve directo desde la
+raíz ("/posters/nombre.jpg"), sin necesidad de importarlas en el código.
+
+Mientras un archivo no exista, PosterCard.jsx y MovieDetail.jsx muestran
+automáticamente un reemplazo con la inicial del título, así que puedes ir
+agregando las imágenes una por una sin que nada se rompa.

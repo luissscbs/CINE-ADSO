@@ -1,0 +1,102 @@
+.panel {
+  background: var(--color-surface-low);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  align-self: start;
+}
+
+@media (min-width: 1024px) {
+  .panel {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.lista {
+  margin: var(--space-md) 0;
+  min-height: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filaResumen {
+  display: flex;
+  justify-content: space-between;
+}
+
+.totales {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.totalFinal {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin-top: 0.35rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: var(--space-md) 0;
+}
+
+.input,
+.select {
+  background: var(--color-surface-low);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  padding: 0.65rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.inputError {
+  border-color: #ffb4ab;
+}
+
+.botonPrimario {
+  width: 100%;
+  background: var(--color-text-primary);
+  color: var(--color-canvas);
+  font-weight: 500;
+  padding: 0.85rem;
+  border: none;
+  border-radius: var(--radius-md);
+  transition: background-color 150ms ease;
+}
+
+.botonPrimario:hover:not(:disabled) {
+  background: #e4e4e7;
+}
+
+.botonPrimario:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.avisoLimite {
+  color: #ffb4ab;
+  margin-top: var(--space-sm);
+}

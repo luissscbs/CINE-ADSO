@@ -1,0 +1,132 @@
+.hero {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-3xl);
+  display: grid;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+  }
+}
+
+.heroFrame {
+  position: relative;
+  aspect-ratio: 2.39 / 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-low);
+}
+
+@media (min-width: 1024px) {
+  .heroFrame {
+    aspect-ratio: auto;
+    height: 26rem;
+  }
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  background: linear-gradient(155deg, var(--color-surface-high), var(--color-surface-low));
+}
+
+.heroBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: var(--space-md) 0 var(--space-lg);
+}
+
+.heroSynopsis {
+  max-width: 40ch;
+  margin-bottom: var(--space-lg);
+}
+
+.ctaGhost {
+  display: inline-block;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.ctaGhost:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.section {
+  padding-bottom: var(--space-3xl);
+}
+
+.grillaPeliculas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+@media (min-width: 640px) {
+  .grillaPeliculas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grillaPeliculas {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.grillaSalas {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+  .grillaSalas {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.salaCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.salaHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.salaSpecs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}

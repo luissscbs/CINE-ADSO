@@ -1,0 +1,227 @@
+/* =========================================================================
+   index.css — tokens del sistema "Cinema Editorial" (ver design.md) y base
+   global. Los componentes usan CSS Modules; aquí sólo van las variables,
+   el reset y las clases tipográficas reutilizables (display-xl, headline-*,
+   body-*, label-*).
+   ========================================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap");
+
+:root {
+  /* --- superficies --- */
+  --color-canvas: #090a0f;
+  --color-surface-low: #0d0f17;
+  --color-surface-high: #151824;
+  --color-surface-frosted: rgba(13, 15, 23, 0.72);
+  --color-surface-modal: rgba(13, 15, 23, 0.82);
+
+  /* --- texto --- */
+  --color-text-primary: #f4f4f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #52525b;
+
+  /* --- bordes --- */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-border-focus: rgba(255, 255, 255, 0.4);
+
+  /* --- acento --- */
+  --color-gold: #d4af37;
+  --color-gold-hover: #e5c358;
+  --color-gold-tint: rgba(212, 175, 55, 0.08);
+  --color-gold-border: rgba(212, 175, 55, 0.35);
+
+  /* --- radios --- */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-full: 9999px;
+
+  /* --- espaciado --- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+  --gutter: 2.5rem;
+  --max-editorial: 72rem;
+  --max-wide: 96rem;
+
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-text-primary);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+dl,
+dd,
+dt,
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* ---- contenedor editorial ------------------------------------------------ */
+.container {
+  max-width: var(--max-editorial);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.container-wide {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+@media (max-width: 767px) {
+  .container,
+  .container-wide {
+    padding: 0 var(--space-md);
+  }
+}
+
+/* ---- escala tipográfica --------------------------------------------------- */
+.display-xl {
+  font-weight: 300;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  letter-spacing: -0.03em;
+}
+@media (min-width: 768px) {
+  .display-xl {
+    font-size: 4.5rem;
+    line-height: 5rem;
+    letter-spacing: -0.04em;
+  }
+}
+
+.headline-lg {
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .headline-lg {
+    font-size: 2.5rem;
+    line-height: 3rem;
+    letter-spacing: -0.025em;
+  }
+}
+
+.headline-md {
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+  letter-spacing: -0.02em;
+}
+
+.headline-sm {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+.body-lg {
+  font-weight: 300;
+  font-size: 1.125rem;
+  line-height: 1.875rem;
+  letter-spacing: -0.005em;
+}
+
+.body-md {
+  font-weight: 300;
+  font-size: 0.9375rem;
+  line-height: 1.6rem;
+}
+
+.body-sm {
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.35rem;
+  letter-spacing: 0.01em;
+}
+
+.label-md {
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.label-sm {
+  font-weight: 500;
+  font-size: 0.6875rem;
+  line-height: 0.875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-gold {
+  color: var(--color-gold);
+}
