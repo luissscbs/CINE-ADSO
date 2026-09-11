@@ -2,62 +2,56 @@
 
 ## Project overview
 
-Fullstack cinema ticketing app: **React 18 + Vite** frontend, **Express 4** API, **MySQL** database. Not a monorepo — two independent `package.json` files (root + `backend/`). Both use `"type": "module"` (ESM).
+Fullstack cinema ticketing app: **React 18 + Vite** frontend, **Express 4** API, **MySQL**. Not a monorepo — two independent `package.json` files (root + `backend/`), both `"type": "module"` (ESM).
 
 Language: Spanish (variable names, comments, UI, seed data).
 
 ## Commands
 
-### Frontend (root)
+Frontend (root):
 
 ```bash
-npm install          # install dependencies
-npm run dev          # Vite dev server → http://localhost:5173
-npm run build        # production build → dist/
-npm run preview      # preview production build
+npm install
+npm run dev      # Vite → http://localhost:5173
+npm run build    # production build → dist/
 ```
 
-### Backend (`backend/`)
+Backend (`backend/`):
 
 ```bash
 cd backend
 npm install
-npm run seed         # seed database (safe to re-run; truncates first)
-npm run dev          # node --watch server.js → http://localhost:4000
-npm run start        # production start (no watch)
+npm run seed     # truncate + reseed (see gotcha below)
+npm run dev      # node --watch server.js → http://localhost:4000
+npm run start    # production start (no watch)
 ```
 
-**No lint, typecheck, test, or formatter commands exist.** There is no ESLint config, no Prettier, no TypeScript, no test framework, no CI workflows.
+**No lint, typecheck, test, or formatter exists.** No ESLint/Prettier/TS/test framework, no CI workflows, no `.github/`.
 
 ## Environment setup
 
-- **Node 18.11+** required (`backend` uses `node --watch`; Vite 5 needs Node 18+).
-- **MySQL 8.0.13+** — `schema.sql` uses `DEFAULT (CURRENT_DATE)` (MySQL 5.x will fail).
-1. MySQL must be running locally (or accessible by network).
-2. `mysql -u root -p < backend/schema.sql` — creates the `cine_adso` database.
-3. **Backend** `backend/.env` — copy from `backend/.env.example`, set your MySQL credentials. Key vars: `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `PORT` (default 4000), `CORS_ORIGIN` (default `http://localhost:5173`).
-4. **Frontend** root `.env` — copy from `.env.example`, set `VITE_API_URL` (default `http://localhost:4000/api`).
-
-**Gotcha:** The root `.env.example` contains `VITE_API_URL`, but the actual root `.env` currently has backend DB config (wrong file placed there). The frontend reads `VITE_API_URL` via `import.meta.env`; it falls back to `http://localhost:4000/api` if unset. Only `backend/.env` needs DB credentials.
+- **Node 18.11+** (`backend` uses `node --watch`; Vite 5 needs Node 18+).
+- **MySQL 8.0.13+** — `schema.sql` uses `DEFAULT (CURRENT_DATE)` (fails on MySQL 5.x).
+- Fresh DB: `mysql -u root -p < backend/schema.sql` (already includes `usuarios`, `productos`, `detalle_venta`). Existing DBs created before those tables: run `backend/migrations/001_usuarios_productos.sql` once instead.
+- `backend/.env` — copy from `backend/.env.example`. Key vars: `DB_HOST`, `DB_PORT` (defaults 3306), `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `PORT` (default 4000), `CORS_ORIGIN` (default `http://localhost:5173`). `JWT_SECRET`/`JWT_EXPIRES_IN` have dev fallbacks in `routes/auth.js`, so auth works without them locally.
+- Frontend root `.env` — copy from `.env.example`, only var is `VITE_API_URL` (falls back to `http://localhost:4000/api` if unset).
+- **Gotcha:** the root `.env` currently contains backend DB vars (`PORT`, `DB_*`) instead of `VITE_API_URL`. Only `backend/.env` needs DB credentials; don't "fix" the frontend by adding DB vars to it.
 
 ## Architecture
 
-- **Entry point:** `src/main.jsx` → `App.jsx` → three routes (`/`, `/pelicula/:id`, `/asientos/:id`).
-- **API client:** `src/api/client.js` — all fetch calls go through `api.*` methods. Uses `VITE_API_URL` env var.
-- **Context:** `src/context/CatalogoContext.jsx` — loads clasificaciones, salas, and peliculas once at app start. Exposes `useCatalogo()` hook.
-- **Design system:** "Cinema Editorial" — CSS custom properties in `src/index.css`, CSS Modules for component styles. Font: Outfit (Google Fonts). Dark theme.
-- **Backend routes:** `backend/routes/{clasificaciones,salas,peliculas,funciones,ventas}.js`. Centralized error handler in `server.js`.
-- **Seat pricing:** calculated in frontend (`src/utils/seats.js`) with 1.15x multiplier for VIP/preferencial. This is a demo simplification.
+- **Routes** (`src/App.jsx`): `/`, `/pelicula/:id`, `/asientos/:id`, `/ingresar`, `/carrito`, `/dulceria`. Providers nest `Theme > Auth > Carrito > Catalogo` — keep that order (Carrito/Catalogo pages consume Auth).
+- **API client** (`src/api/client.js`): all fetches go through `api.*`. Reads `VITE_API_URL`, attaches `cine-adso-token` from localStorage as `Bearer` when present.
+- **Catalog** (`src/context/CatalogoContext.jsx`): loads clasificaciones + salas + peliculas once via `Promise.all`; exposes `useCatalogo()` with `*ById` map helpers. Cart (`cine-adso-carrito`) and theme (`cine-adso-theme`) also persist in localStorage.
+- **Backend routers** (`backend/server.js`): `clasificaciones`, `salas`, `peliculas`, `funciones`, `ventas`, `auth`, `productos`. Centralized error handler in `server.js`; pool config in `backend/db.js` (`dateStrings: true`).
+- **Auth is JWT, not absent:** `POST /api/auth/registro`, `POST /api/auth/login` (bcrypt + `jsonwebtoken`), `GET /api/auth/perfil` (only route using `requerirAuth`). Ticket/dulcería purchase endpoints are still public and identify the buyer by email via `clientes` upsert.
+- **Pricing split:** boleto prices are computed in frontend (`src/utils/seats.js`, 1.15x for `vip`/`preferencial`, rounded to 100) and trusted as-is by `POST /api/ventas`. Dulcería prices are always re-resolved server-side from `productos` (`resolverDulceria` in `backend/routes/ventas.js`) — never trust client prices there.
+- **Purchases are transactional** (`backend/routes/ventas.js`): `POST /api/ventas` (boletos + optional dulcería) and `POST /api/ventas/dulceria` (dulcería only). Double-booking is caught via `ER_DUP_ENTRY` on `boletos(id_funcion, id_asiento)` → 409. 8% service charge (`CARGO_SERVICIO`) lives in both `ventas.js` and `SeatSelection.jsx`; 8-seat cap (`LIMITE_ASIENTOS`) is frontend-only.
 
-## Seed data gotcha
+## Gotchas
 
-`npm run seed` generates `funciones` (showtimes) for **today and tomorrow only**. If days pass without re-seeding, functions expire to the past and the cartelera appears empty. Re-run `npm run seed` to refresh.
-
-## Key constraints
-
-- Backend runs on port 4000, frontend on 5173. Both must be running simultaneously for the app to work.
-- CORS is restricted to `CORS_ORIGIN` env var (defaults to `http://localhost:5173`).
-- No authentication — all endpoints are public.
-- 8-seat purchase limit and 8% service charge are hardcoded in `src/pages/SeatSelection.jsx` and `backend/routes/ventas.js`.
-- Poster images go in `public/posters/`, filenames must match `poster_url` values in the database.
-- Purchase transaction uses MySQL `UNIQUE` constraint on `boletos(id_funcion, id_asiento)` to prevent double-booking at the DB level.
+- `npm run seed` truncates 11 tables (including `usuarios`) and generates `funciones` for **today + tomorrow only** — days later the cartelera looks empty; just re-seed.
+- Seed writes datetimes in **local time** (not UTC) on purpose; night shows would otherwise shift to "tomorrow" and vanish from today's cartelera. Don't "simplify" with `toISOString`.
+- Last two seat rows are `preferencial` (non-VIP salas); ~4% deterministic `mantenimiento` seats via `hashAsiento` — not random.
+- Images: posters → `public/posters/`, dulcería → `public/dulceria/`; filenames must match `poster_url` / `imagen_url` in DB. Backdrops (`backdrop_url`) have no local files.
+- CORS allows only `CORS_ORIGIN`; both servers must run simultaneously.
+- Styling: CSS custom properties in `src/index.css` + CSS Modules per page/component. Font: Outfit, dark theme.
